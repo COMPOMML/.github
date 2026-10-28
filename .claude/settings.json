@@ -1,0 +1,12 @@
+{
+  "model": "sonnet",
+  "attribution": {
+    "commit": "",
+    "pr": "",
+    "sessionUrl": false
+  },
+  "enabledPlugins": {
+    "kicad-happy@kicad-happy": false,
+    "clangd-lsp@claude-plugins-official": false
+  }
+}

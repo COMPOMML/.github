@@ -1,0 +1,55 @@
+name: Sprint close
+description: Review and retro at the end of a sprint.
+title: "Sprint N close"
+body:
+  - type: input
+    id: goal
+    attributes:
+      label: Sprint goal
+    validations:
+      required: true
+  - type: dropdown
+    id: met
+    attributes:
+      label: Goal met?
+      options:
+        - "Yes"
+        - "Partly"
+        - "No"
+    validations:
+      required: true
+  - type: textarea
+    id: done
+    attributes:
+      label: Done
+      placeholder: "- #…"
+  - type: textarea
+    id: not-done
+    attributes:
+      label: Not done, and what happens to it
+      placeholder: "- #… → next sprint / back to backlog / dropped"
+  - type: input
+    id: points
+    attributes:
+      label: Points committed / completed
+      placeholder: "25 / 20"
+    validations:
+      required: true
+  - type: textarea
+    id: went-well
+    attributes:
+      label: "Retro: went well"
+  - type: textarea
+    id: slowed
+    attributes:
+      label: "Retro: slowed us down"
+  - type: textarea
+    id: actions
+    attributes:
+      label: "Retro: actions (max 2, with owner)"
+      placeholder: |
+        - [ ] … (@…)
+  - type: textarea
+    id: previous
+    attributes:
+      label: Previous sprint's actions done?

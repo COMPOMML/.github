@@ -1,0 +1,45 @@
+# Reusable Python check for the COMPO code repos: byte-compiles every Python file
+# in the repo's code folders. CI never runs COMPO on data and never starts a
+# solver; the real checks (DEV.py doctor / check) run on the LS-DYNA computer.
+# dev/scripts_used/ is skipped: it is the dated history of one-off patch scripts.
+#
+# Usage:
+#   jobs:
+#     python:
+#       uses: COMPOMML/.github/.github/workflows/python-ci.yml@main
+name: python-ci
+
+on:
+  workflow_call:
+    inputs:
+      paths:
+        description: Space-separated folders to compile (missing ones are skipped).
+        type: string
+        default: "src dev scripts"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}-python
+  cancel-in-progress: true
+
+jobs:
+  compile:
+    name: compileall
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Byte-compile
+        env:
+          PATHS: ${{ inputs.paths }}
+        run: |
+          found=()
+          for p in $PATHS; do [ -e "$p" ] && found+=("$p"); done
+          if [ ${#found[@]} -eq 0 ]; then echo "no Python folders: nothing to do"; exit 0; fi
+          python3 --version
+          python3 -m compileall -q -x '/scripts_used/' "${found[@]}"

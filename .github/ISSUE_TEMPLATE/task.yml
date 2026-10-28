@@ -1,0 +1,20 @@
+name: Task
+description: Technical work (infra, CI, refactor) or a time-boxed spike.
+type: Task
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+      description: What we get and why now.
+    validations:
+      required: true
+  - type: textarea
+    id: done
+    attributes:
+      label: Done when
+      description: For a spike, the question it answers and its timebox.
+      placeholder: |
+        - [ ] …
+    validations:
+      required: true

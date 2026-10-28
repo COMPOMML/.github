@@ -1,0 +1,24 @@
+name: Story
+description: Something a COMPO user needs, and why.
+type: Feature
+body:
+  - type: textarea
+    id: story
+    attributes:
+      label: Story
+      description: As a … I want … so that …
+      placeholder: As a calibration engineer I want CAL to flag swapped raw folders so that the card is not built from the wrong direction.
+    validations:
+      required: true
+  - type: textarea
+    id: criteria
+    attributes:
+      label: Acceptance criteria
+      placeholder: |
+        - [ ] Given …, when …, then …
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes and out of scope

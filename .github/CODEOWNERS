@@ -1,0 +1,3 @@
+# Workflow changes here run for every repo that calls them.
+/.github/workflows/ @miguelmedinalazcano
+/.github/CODEOWNERS @miguelmedinalazcano

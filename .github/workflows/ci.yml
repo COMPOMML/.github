@@ -1,0 +1,41 @@
+# CI for the org .github repo itself: lint the workflows, scan for secrets, and
+# smoke-test the "nothing to do" path of the reusable Python check.
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  ACTIONLINT_VERSION: 1.7.12
+  ACTIONLINT_SHA256: 8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8
+
+jobs:
+  actionlint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: actionlint
+        run: |
+          f="actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz"
+          curl -fsSLo "$RUNNER_TEMP/$f" "https://github.com/rhysd/actionlint/releases/download/v${ACTIONLINT_VERSION}/${f}"
+          (cd "$RUNNER_TEMP" && echo "${ACTIONLINT_SHA256}  ${f}" | sha256sum --check --strict && tar -xzf "$f" actionlint)
+          "$RUNNER_TEMP/actionlint" -color
+
+  gitleaks:
+    uses: ./.github/workflows/gitleaks.yml
+
+  # This repo has no Python folders: must pass by skipping.
+  python-skip:
+    uses: ./.github/workflows/python-ci.yml
