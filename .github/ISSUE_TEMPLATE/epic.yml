@@ -1,7 +1,6 @@
 name: Epic
 description: A group of stories and tasks toward a milestone.
-type: Feature
-labels: ["epic"]
+type: Epic
 body:
   - type: textarea
     id: goal

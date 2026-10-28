@@ -1,6 +1,6 @@
 name: Story
 description: Something a COMPO user needs, and why.
-type: Feature
+type: Story
 body:
   - type: textarea
     id: story
